@@ -1,66 +1,330 @@
 # UI Wireframes
 
-## Page 1 Dashboard
+The visualization studio is a collection of static HTML pages that consume `report.json` and provide forensic views into filesystem evolution, fragment churn, reuse behavior, and structural movement.
+
+---
+
+# Page 1: Dashboard
+
+Provides a high-level summary of analysis results.
 
 ```text
-+--------------------------------------------------------------+
-| Topbar + Theme + report.json loader                          |
-+--------------------------------------------------------------+
-| KPI Cards: Total Files | Total Fragments | Reuse | Loss      |
-+--------------------------------------------------------------+
-| Pie: File Status       | Bar: Top Disruptive Files           |
-+--------------------------------------------------------------+
-| Treemap: Fragments     | Heatmap: Churn                      |
-+--------------------------------------------------------------+
++----------------------------------------------------------------+
+| Top Bar                                                        |
+| Theme Toggle | Report Loader | Report Metadata                 |
++----------------------------------------------------------------+
+
++----------------------------------------------------------------+
+| KPI Cards                                                      |
+| Total Files | Total Fragments | Reuse Ratio | Reuse Loss      |
++----------------------------------------------------------------+
+
++--------------------------------+-------------------------------+
+| File Status Distribution       | Top Disruptive Files          |
+| (Pie Chart)                    | (Bar Chart)                  |
++--------------------------------+-------------------------------+
+
++--------------------------------+-------------------------------+
+| Fragment Overview              | Churn Heatmap                |
+| (Treemap)                      | (Heat Layer)                |
++--------------------------------+-------------------------------+
+
++----------------------------------------------------------------+
+| Analysis Summary                                            |
++----------------------------------------------------------------+
 ```
 
-## Page 2 Side-by-Side
+### Primary Data Sources
+
+- `summary`
+- `files`
+- `fragments`
+- `executive_summary`
+- `heatmap_data`
+
+---
+
+# Page 2: Side-by-Side Fragment Explorer
+
+Compares file membership between fragment revisions.
 
 ```text
-+----------------------+   +----------------------+
-| OLD Fragment N       |   | NEW Fragment N       |
-| file_a [green]       |   | file_a [green]       |
-| file_b [red]         |   | file_x [blue]        |
-| file_c [yellow]      |   | file_c [yellow]      |
-+----------------------+   +----------------------+
++---------------------------+   +---------------------------+
+| OLD Fragment              |   | NEW Fragment              |
++---------------------------+   +---------------------------+
+| file_a      [retained]    |   | file_a      [retained]    |
+| file_b      [removed]     |   | file_x      [added]       |
+| file_c      [retained]    |   | file_c      [retained]    |
++---------------------------+   +---------------------------+
+
+Legend:
+Retained | Added | Removed
 ```
 
-## Page 3 File Explorer
+### Primary Data Sources
+
+- `fragments`
+- `data_confidence`
+
+---
+
+# Page 3: File Explorer
+
+Searchable forensic view for file-level analysis.
 
 ```text
-Searchable DataTable
-path | old/new fragment | sizes | neighbors | status | impact | reuse | root cause
++--------------------------------------------------------------------------+
+| Search / Filter Controls                                                 |
++--------------------------------------------------------------------------+
+
+path | old_fragment | new_fragment | status | impact | reuse | root cause
+
+--------------------------------------------------------------------------
+
+/system/bin/init
+/product/app/example.apk
+/vendor/lib/example.so
 ```
 
-## Page 4 Fragment Explorer
+### Attributes
+
+- File status
+- Root cause
+- Impact score
+- Reuse score
+- Neighbor relationships
+
+### Primary Data Source
+
+- `files`
+
+---
+
+# Page 4: Fragment Explorer
+
+Detailed fragment-level forensic view.
 
 ```text
-Searchable DataTable
-fragment | old/new membership | added | removed | retained | churn | reuse
++--------------------------------------------------------------------------+
+| Search / Filter Controls                                                 |
++--------------------------------------------------------------------------+
+
+fragment
+old membership
+new membership
+added files
+removed files
+retained files
+reuse score
+churn ratio
 ```
 
-## Page 5 Sankey
+### Primary Data Sources
+
+- `fragments`
+- `data_confidence`
+
+---
+
+# Page 5: Movement Analysis (Sankey)
+
+Visualizes structural movement between revisions.
 
 ```text
-OLD fragment nodes --> NEW fragment nodes
-link width = moved file count
-filter box by fragment/path/directory token
+OLD Fragments
+      │
+      │ movement
+      ▼
+NEW Fragments
+
+Link Width = Movement Magnitude
+
+Filters:
+- Fragment ID
+- File Path
+- Directory Token
 ```
 
-## Page 6 Blast Radius
+### Visualization
+
+- D3 Sankey Diagram
+
+### Primary Data Source
+
+- `movement_graph`
+
+---
+
+# Page 6: Blast Radius Analysis
+
+Shows downstream effects of structural changes.
 
 ```text
-select file -> impacted fragments/files + bar chart + dependency graph
++-------------------------------------------------------------+
+| File Selector                                               |
++-------------------------------------------------------------+
+
+Selected File
+      │
+      ├── Impacted Fragments
+      ├── Impacted Files
+      └── Reuse Loss Estimate
+
++-------------------------------------------------------------+
+| Impact Chart                                                |
++-------------------------------------------------------------+
+
++-------------------------------------------------------------+
+| Dependency Graph                                            |
++-------------------------------------------------------------+
 ```
 
-## Page 7 Reuse Opportunities
+### Primary Data Source
+
+- `blast_radius`
+
+---
+
+# Page 7: Reuse Opportunities
+
+Highlights structures that may be optimized for improved reuse.
 
 ```text
-ranked DataTable + horizontal importance chart
++-------------------------------------------------------------+
+| Ranked Candidate Table                                      |
++-------------------------------------------------------------+
+
+Path | Reason | Reuse Score | Potential Benefit
+
++-------------------------------------------------------------+
+| Opportunity Ranking Chart                                   |
++-------------------------------------------------------------+
 ```
 
-## Page 8 Heatmaps
+### Primary Data Source
+
+- `reuse_opportunities`
+
+---
+
+# Page 8: Heatmaps
+
+Provides visual summaries of change intensity.
 
 ```text
-fragment churn | movement | reuse | impact heat layers
++-------------------------------------------------------------+
+| Fragment Churn Heatmap                                      |
++-------------------------------------------------------------+
+
++-------------------------------------------------------------+
+| Movement Heatmap                                            |
++-------------------------------------------------------------+
+
++-------------------------------------------------------------+
+| Reuse Heatmap                                               |
++-------------------------------------------------------------+
+
++-------------------------------------------------------------+
+| Impact Heatmap                                              |
++-------------------------------------------------------------+
 ```
+
+### Primary Data Source
+
+- `heatmap_data`
+
+---
+
+# Page 9: Parser Validation
+
+Provides extraction traceability and confidence information.
+
+```text
++-------------------------------------------------------------+
+| Confidence Banner                                           |
++-------------------------------------------------------------+
+
+Confidence Level:
+HIGH | MEDIUM | LOW
+
+Membership Available:
+YES | NO
+
++-------------------------------------------------------------+
+| Validation Records                                          |
++-------------------------------------------------------------+
+
+Source File
+Source Line
+Parser Rule
+Extracted Value
+```
+
+### Primary Data Sources
+
+- `parser_validation`
+- `data_confidence`
+- `warnings`
+
+---
+
+# Page 10: Offset Analysis
+
+Visualizes filesystem layout evolution across revisions.
+
+```text
++-------------------------------------------------------------+
+| Storage Timeline                                            |
++-------------------------------------------------------------+
+
+OLD OFFSETS ---------------------------------------------->
+
+NEW OFFSETS ---------------------------------------------->
+
++-------------------------------------------------------------+
+| Largest File Movements                                      |
++-------------------------------------------------------------+
+
++-------------------------------------------------------------+
+| Offset Cascades                                             |
++-------------------------------------------------------------+
+
++-------------------------------------------------------------+
+| Image Shift Statistics                                      |
++-------------------------------------------------------------+
+```
+
+### Primary Data Source
+
+- `offset_analysis`
+
+---
+
+# Shared UI Components
+
+All pages inherit common components:
+
+```text
+Top Navigation
+Theme Toggle
+Report Loader
+Confidence Banner
+Analyzer Warning Banner
+Footer
+```
+
+---
+
+# Offline Design
+
+The visualization studio supports multiple report-loading modes:
+
+```text
+Embedded Report
+       ↓
+Local Cache
+       ↓
+report.json
+```
+
+This design enables completely offline forensic workflows without requiring a backend service.

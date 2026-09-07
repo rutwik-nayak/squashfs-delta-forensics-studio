@@ -34,6 +34,20 @@ The architecture is designed to support additional metadata sources and analysis
 
 ---
 
+## Why This Exists
+
+Traditional filesystem comparison tools can identify what changed, but often provide limited visibility into why structural changes occurred or how those changes affect reuse opportunities.
+
+SquashFS Delta Forensics Studio focuses on explainable forensic analysis, helping engineers understand:
+
+- What changed?
+- What moved?
+- Where was reuse lost?
+- What structures contributed most to churn?
+- What changes had the largest downstream impact?
+
+---
+
 ## Features
 
 ### Metadata Extraction
@@ -87,6 +101,24 @@ The architecture is designed to support additional metadata sources and analysis
 
 ---
 
+## Architecture Overview
+
+```text
+Input Sources
+    ↓
+Metadata Extraction Layer
+    ↓
+CanonicalImageModel
+    ↓
+ForensicsAnalyzer
+    ↓
+report.json
+    ↓
+Visualization Studio
+```
+
+---
+
 ## Project Structure
 
 ### Core Analysis Package
@@ -127,6 +159,16 @@ The architecture is designed to support additional metadata sources and analysis
 
 - `samples/`
   - Synthetic demonstration datasets
+
+---
+
+## Documentation
+
+- `docs/ARCHITECTURE.md` — System architecture and design principles
+- `docs/ROADMAP.md` — Planned improvements and future work
+- `docs/JSON_MODEL.md` — Canonical model and report contracts
+- `docs/WIREFRAMES.md` — Visualization studio wireframes
+- `docs/FUTURE_ENHANCEMENTS.md` — Long-term vision and capabilities
 
 ---
 
@@ -205,7 +247,7 @@ Analysis components consume only the canonical model, ensuring separation betwee
 
 ### Source Preference
 
-When available, direct SquashFS extraction is preferred because it provides authoritative filesystem metadata that map-based formats may not contain.
+When available, direct SquashFS extraction is preferred because it provides the richest available source of filesystem metadata and may expose relationships that map-based formats do not contain.
 
 ### Extending the System
 
@@ -301,6 +343,10 @@ No proprietary firmware images, OTA payloads, customer data, confidential datase
 
 ---
 
-## License
+## Contributing
 
-License information will be added when the project is publicly released.
+Contributions are welcome.
+
+Please see `CONTRIBUTING.md` for contribution guidelines and development principles.
+
+Only synthetic datasets should be committed to the repository. Do not contribute proprietary firmware images, confidential metadata, or customer data.
