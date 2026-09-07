@@ -1,0 +1,20 @@
+[project]
+name = "squashfs-delta-forensics-studio"
+version = "0.1.0"
+description = "Production-grade local forensic analysis workbench for SquashFS fragment and reuse behavior"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "OTA Systems Team" }
+]
+dependencies = []
+
+[project.scripts]
+forensics-studio = "forensics_studio.cli:main"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["forensics_studio", "forensics_studio.models", "forensics_studio.parsers", "forensics_studio.analyzer", "forensics_studio.reporting", "forensics_studio.utils", "forensics_studio.extractors"]

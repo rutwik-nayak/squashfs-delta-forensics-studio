@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Parser Validation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="../assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid p-3 p-lg-4">
+  <div class="topbar mb-3">
+    <div class="d-flex justify-content-between flex-wrap gap-2 align-items-center">
+      <div>
+        <div class="brand-title">Page 9: Parser Validation</div>
+        <div class="brand-subtitle">Exact parsed records and source traceability for parser correctness validation</div>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <label class="form-check-label small" for="themeToggle">Dark mode</label>
+        <input class="form-check-input" type="checkbox" id="themeToggle">
+        <input class="form-control form-control-sm" type="file" id="reportFile" accept="application/json">
+      </div>
+    </div>
+    <div id="loadError" class="alert alert-warning mt-3 d-none"></div>
+  </div>
+
+  <ul class="nav nav-pills flex-wrap gap-2 mb-3">
+    <li class="nav-item"><a class="nav-link" href="../report.html">Dashboard</a></li>
+    <li class="nav-item"><a class="nav-link" href="side-by-side.html">Side-by-Side</a></li>
+    <li class="nav-item"><a class="nav-link" href="file-explorer.html">File Explorer</a></li>
+    <li class="nav-item"><a class="nav-link" href="fragment-explorer.html">Fragment Explorer</a></li>
+    <li class="nav-item"><a class="nav-link" href="sankey.html">Sankey Movement</a></li>
+    <li class="nav-item"><a class="nav-link" href="blast-radius.html">Blast Radius</a></li>
+    <li class="nav-item"><a class="nav-link" href="reuse-opportunities.html">Reuse Opportunities</a></li>
+    <li class="nav-item"><a class="nav-link" href="heatmaps.html">Heatmaps</a></li>
+    <li class="nav-item"><a class="nav-link active" href="parser-validation.html">Parser Validation</a></li>
+    <li class="nav-item"><a class="nav-link" href="offset-analysis.html">Offset Analysis</a></li>
+  </ul>
+
+  <div class="row g-3 mb-3">
+    <div class="col-lg-4"><div class="kpi"><div class="kpi-label">Parser Confidence</div><div class="kpi-value"><span id="parserConfidence" class="badge bg-secondary">-</span></div></div></div>
+    <div class="col-lg-8"><div class="page-card p-3"><strong>Parser Assumptions</strong><ul id="parserAssumptions" class="mt-2 mb-0"></ul></div></div>
+  </div>
+
+  <div class="page-card p-3 mb-3">
+    <h6 class="panel-title">Parser Diagnostics</h6>
+    <div id="parserDiagnostics" class="small text-muted">-</div>
+  </div>
+
+  <div class="page-card p-3 mb-3 table-wrap">
+    <h6 class="panel-title">Parsed FILE Records</h6>
+    <table id="parsedFilesTable" class="table table-striped table-bordered align-middle">
+      <thead><tr><th>#</th><th>Path</th><th>Old Fragment</th><th>New Fragment</th><th>Old Start Offset</th><th>New Start Offset</th><th>Old Blocks</th><th>New Blocks</th><th>Old Extents</th><th>New Extents</th><th>Source OLD</th><th>Source NEW</th><th>Confidence</th></tr></thead>
+      <tbody id="parsedFilesBody"></tbody>
+    </table>
+  </div>
+
+  <div class="page-card p-3 mb-3 table-wrap">
+    <h6 class="panel-title">Parsed FRAGMENT Records</h6>
+    <table id="parsedFragmentsTable" class="table table-striped table-bordered align-middle">
+      <thead><tr><th>Fragment</th><th>Old Members</th><th>New Members</th><th>Membership Available</th><th>Message</th></tr></thead>
+      <tbody id="parsedFragmentsBody"></tbody>
+    </table>
+  </div>
+
+  <div class="page-card p-3 mb-3 table-wrap">
+    <h6 class="panel-title">Source Records</h6>
+    <table id="sourceRecordsTable" class="table table-striped table-bordered align-middle">
+      <thead><tr><th>Dataset</th><th>Row Type</th><th>Path</th><th>Fragment</th><th>Size</th><th>Blocks</th><th>Start Offset</th><th>Extents</th><th>Source</th><th>Synthetic</th></tr></thead>
+      <tbody id="sourceRecordsBody"></tbody>
+    </table>
+  </div>
+
+  <div class="page-card p-3">
+    <h6 class="panel-title">Trace Details (click any row)</h6>
+    <pre id="tracePanel" class="mb-0" style="max-height:300px;overflow:auto">Select a row to inspect source file, line, and parser rule provenance.</pre>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+<script src="../assets/data/report.inline.js"></script>
+<script src="../assets/js/common.js"></script>
+<script src="../assets/js/parser_validation.js"></script>
+<script>
+  initTheme();
+  initFileLoader(renderParserValidation);
+  loadReport().then(report => {
+    if (report) {
+      renderGlobalDiagnostics(report);
+      renderParserValidation(report);
+    }
+  });
+</script>
+</body>
+</html>

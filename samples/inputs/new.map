@@ -1,0 +1,18 @@
+# path|size|fragment|blocks
+/system/bin/app_process|1048576|100|10,11,12
+/system/bin/init|524288|100|13,14
+/system/lib/liba.so|278528|101|20,21,24
+/system/lib/libb.so|262144|110|22,23
+/system/lib/libcamera.so|786432|102|30,31,32
+/system/etc/props.conf|8192|103|40,42
+/system/etc/security/cacerts.pem|8192|109|41
+/system/framework/framework.jar|4194304|104|50,51,52,53
+/system/framework/services.jar|3145728|111|54,55,56
+/vendor/bin/hwservice|131072|105|60
+/vendor/lib/libvendor.so|393216|105|61,62
+/vendor/lib/libsensor.so|196608|110|63
+/product/app/Launcher.apk|5242880|106|70,71,72,73,74
+/product/app/Settings.apk|3145728|106|75,76,77
+/product/app/Camera.apk|3670016|112|78,79,82
+/product/media/bootanimation.zip|2097152|107|80,81
+/system/etc/selinux/policy.conf|16384|109|43,44

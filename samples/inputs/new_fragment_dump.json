@@ -1,0 +1,16 @@
+{
+  "fragments": {
+    "100": { "compressed_size": 1305000, "files": ["/system/bin/app_process", "/system/bin/init"] },
+    "101": { "compressed_size": 300000, "files": ["/system/lib/liba.so"] },
+    "102": { "compressed_size": 820000, "files": ["/system/lib/libcamera.so"] },
+    "103": { "compressed_size": 19000, "files": ["/system/etc/props.conf"] },
+    "104": { "compressed_size": 4200000, "files": ["/system/framework/framework.jar"] },
+    "105": { "compressed_size": 535000, "files": ["/vendor/bin/hwservice", "/vendor/lib/libvendor.so"] },
+    "106": { "compressed_size": 8320000, "files": ["/product/app/Launcher.apk", "/product/app/Settings.apk"] },
+    "107": { "compressed_size": 2100000, "files": ["/product/media/bootanimation.zip"] },
+    "109": { "compressed_size": 25000, "files": ["/system/etc/security/cacerts.pem", "/system/etc/selinux/policy.conf"] },
+    "110": { "compressed_size": 460000, "files": ["/system/lib/libb.so", "/vendor/lib/libsensor.so"] },
+    "111": { "compressed_size": 3300000, "files": ["/system/framework/services.jar"] },
+    "112": { "compressed_size": 3700000, "files": ["/product/app/Camera.apk"] }
+  }
+}

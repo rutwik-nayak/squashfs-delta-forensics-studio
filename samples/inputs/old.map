@@ -1,0 +1,16 @@
+# path|size|fragment|blocks
+/system/bin/app_process|1048576|100|10,11,12
+/system/bin/init|524288|100|13,14
+/system/lib/liba.so|262144|101|20,21
+/system/lib/libb.so|262144|101|22,23
+/system/lib/libcamera.so|786432|102|30,31,32
+/system/etc/props.conf|4096|103|40
+/system/etc/security/cacerts.pem|8192|103|41
+/system/framework/framework.jar|4194304|104|50,51,52,53
+/system/framework/services.jar|3145728|104|54,55,56
+/vendor/bin/hwservice|131072|105|60
+/vendor/lib/libvendor.so|393216|105|61,62
+/product/app/Launcher.apk|5242880|106|70,71,72,73,74
+/product/app/Settings.apk|3145728|106|75,76,77
+/product/media/bootanimation.zip|2097152|107|80,81
+/odm/etc/custom.xml|2048|108|90

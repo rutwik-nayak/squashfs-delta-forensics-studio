@@ -1,0 +1,13 @@
+{
+  "fragments": {
+    "100": { "compressed_size": 1300000, "files": ["/system/bin/app_process", "/system/bin/init"] },
+    "101": { "compressed_size": 560000, "files": ["/system/lib/liba.so", "/system/lib/libb.so"] },
+    "102": { "compressed_size": 820000, "files": ["/system/lib/libcamera.so"] },
+    "103": { "compressed_size": 17000, "files": ["/system/etc/props.conf", "/system/etc/security/cacerts.pem"] },
+    "104": { "compressed_size": 7000000, "files": ["/system/framework/framework.jar", "/system/framework/services.jar"] },
+    "105": { "compressed_size": 530000, "files": ["/vendor/bin/hwservice", "/vendor/lib/libvendor.so"] },
+    "106": { "compressed_size": 8300000, "files": ["/product/app/Launcher.apk", "/product/app/Settings.apk"] },
+    "107": { "compressed_size": 2100000, "files": ["/product/media/bootanimation.zip"] },
+    "108": { "compressed_size": 3000, "files": ["/odm/etc/custom.xml"] }
+  }
+}

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Heatmaps</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="../assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid p-3 p-lg-4">
+  <div class="topbar mb-3">
+    <div class="d-flex justify-content-between flex-wrap gap-2 align-items-center">
+      <div><div class="brand-title">Page 8: Heatmaps</div><div class="brand-subtitle">Fragment churn, movement, reuse, and impact heat layers with click-through tables</div></div>
+      <div class="d-flex align-items-center gap-2"><label class="form-check-label small" for="themeToggle">Dark mode</label><input class="form-check-input" type="checkbox" id="themeToggle"><input class="form-control form-control-sm" type="file" id="reportFile" accept="application/json"></div>
+    </div>
+    <div id="loadError" class="alert alert-warning mt-3 d-none"></div>
+  </div>
+
+  <ul class="nav nav-pills flex-wrap gap-2 mb-3">
+    <li class="nav-item"><a class="nav-link" href="../report.html">Dashboard</a></li>
+    <li class="nav-item"><a class="nav-link" href="side-by-side.html">Side-by-Side</a></li>
+    <li class="nav-item"><a class="nav-link" href="file-explorer.html">File Explorer</a></li>
+    <li class="nav-item"><a class="nav-link" href="fragment-explorer.html">Fragment Explorer</a></li>
+    <li class="nav-item"><a class="nav-link" href="sankey.html">Sankey Movement</a></li>
+    <li class="nav-item"><a class="nav-link" href="blast-radius.html">Blast Radius</a></li>
+    <li class="nav-item"><a class="nav-link" href="reuse-opportunities.html">Reuse Opportunities</a></li>
+    <li class="nav-item"><a class="nav-link active" href="heatmaps.html">Heatmaps</a></li>
+    <li class="nav-item"><a class="nav-link" href="parser-validation.html">Parser Validation</a></li>
+    <li class="nav-item"><a class="nav-link" href="offset-analysis.html">Offset Analysis</a></li>
+  </ul>
+
+  <div class="row g-3">
+    <div class="col-lg-6"><div class="page-card p-3"><div id="fragmentHeat" style="height:320px"></div></div></div>
+    <div class="col-lg-6"><div class="page-card p-3"><div id="movementHeat" style="height:320px"></div></div></div>
+    <div class="col-lg-6"><div class="page-card p-3"><div id="reuseHeat" style="height:320px"></div></div></div>
+    <div class="col-lg-6"><div class="page-card p-3"><div id="impactHeat" style="height:320px"></div></div></div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.34.0.min.js"></script>
+<script src="../assets/data/report.inline.js"></script>
+<script src="../assets/js/common.js"></script>
+<script src="../assets/js/heatmaps.js"></script>
+<script>
+  initTheme();
+  initFileLoader(renderHeatmaps);
+  loadReport().then(report => {
+    if (report) {
+      renderGlobalDiagnostics(report);
+      renderHeatmaps(report);
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SquashFS Delta Forensics Studio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid p-3 p-lg-4">
+  <div class="topbar mb-3">
+    <div class="d-flex flex-wrap justify-content-between gap-2 align-items-center">
+      <div>
+        <div class="brand-title">SquashFS Delta Forensics Studio</div>
+        <div class="brand-subtitle">Filesystem forensic workbench for fragment churn and reuse-loss analysis</div>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <label class="form-check-label small" for="themeToggle">Dark mode</label>
+        <input class="form-check-input" type="checkbox" id="themeToggle">
+        <input class="form-control form-control-sm" type="file" id="reportFile" accept="application/json">
+      </div>
+    </div>
+    <div id="loadError" class="alert alert-warning mt-3 d-none"></div>
+  </div>
+
+  <ul class="nav nav-pills flex-wrap gap-2 mb-3">
+    <li class="nav-item"><a class="nav-link active" href="report.html">Dashboard</a></li>
+    <li class="nav-item"><a class="nav-link" href="pages/side-by-side.html">Side-by-Side</a></li>
+    <li class="nav-item"><a class="nav-link" href="pages/file-explorer.html">File Explorer</a></li>
+    <li class="nav-item"><a class="nav-link" href="pages/fragment-explorer.html">Fragment Explorer</a></li>
+    <li class="nav-item"><a class="nav-link" href="pages/sankey.html">Sankey Movement</a></li>
+    <li class="nav-item"><a class="nav-link" href="pages/blast-radius.html">Blast Radius</a></li>
+    <li class="nav-item"><a class="nav-link" href="pages/reuse-opportunities.html">Reuse Opportunities</a></li>
+    <li class="nav-item"><a class="nav-link" href="pages/heatmaps.html">Heatmaps</a></li>
+    <li class="nav-item"><a class="nav-link" href="pages/parser-validation.html">Parser Validation</a></li>
+    <li class="nav-item"><a class="nav-link" href="pages/offset-analysis.html">Offset Analysis</a></li>
+  </ul>
+
+  <div class="row g-3 mb-3">
+    <div class="col-sm-6 col-xl-3"><div class="kpi"><div class="kpi-label">Total Files</div><div class="kpi-value" id="kpiFiles">-</div></div></div>
+    <div class="col-sm-6 col-xl-3"><div class="kpi"><div class="kpi-label">Total Fragments</div><div class="kpi-value" id="kpiFragments">-</div></div></div>
+    <div class="col-sm-6 col-xl-3"><div class="kpi"><div class="kpi-label">Fragment Reuse Ratio</div><div class="kpi-value" id="kpiReuse">-</div></div></div>
+    <div class="col-sm-6 col-xl-3"><div class="kpi"><div class="kpi-label">Potential Reuse Loss</div><div class="kpi-value" id="kpiLoss">-</div></div></div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-lg-6"><div class="page-card p-3"><div id="fileStatusPie" style="height:360px"></div></div></div>
+    <div class="col-lg-6"><div class="page-card p-3"><div id="impactBar" style="height:360px"></div></div></div>
+    <div class="col-lg-6"><div class="page-card p-3"><div id="fragmentTreemap" style="height:400px"></div></div></div>
+    <div class="col-lg-6"><div class="page-card p-3"><div id="churnHeatmap" style="height:400px"></div></div></div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.34.0.min.js"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="assets/data/report.inline.js"></script>
+<script src="assets/js/common.js"></script>
+<script src="assets/js/dashboard.js"></script>
+<script>
+  initTheme();
+  initFileLoader(renderDashboard);
+  loadReport().then(report => {
+    if (report) {
+      renderGlobalDiagnostics(report);
+      renderDashboard(report);
+    }
+  });
+</script>
+</body>
+</html>
